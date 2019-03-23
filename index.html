@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Project 2 - Drawing 'ply' Files</title>
+    <H1>Project 2 - Drawing 'ply' Files</H1>
+    <h3>Kenneth Morton</h3>
+    <p>Select a '.ply' file to get started.</p>
+
+    <script id="vshader" type="x-shader/x-vertex">
+        attribute vec4 vPosition;
+        attribute vec4 vColor;
+        uniform mat4 modelMatrix;
+        uniform mat4 projectionMatrix;
+        varying vec4 fColor;
+
+        void main() {
+            gl_Position = projectionMatrix * modelMatrix * vPosition; // Point position
+            gl_PointSize = 10.0; // Point size
+            fColor = vColor;
+        }
+    </script>
+
+    <script id="fshader" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec4 fColor;
+
+        void main() {
+            gl_FragColor = fColor;
+        }
+    </script>
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/initShaders.js"></script>
+    <script src="lib/MV.js"></script>
+
+    <script src="script.js"></script>
+</head>
+
+
+<body onload="main()">
+
+
+<table cellpadding="5" border="0" cellspacing="0">
+    <tbody>
+    <tr>
+        <td>
+            <canvas id="webgl" width="512" height="512">
+                Please use a browser that supports the "canvas" tag.
+            </canvas>
+        </td>
+        <td style="vertical-align: top">
+            <h2 style="margin-top: 0">KeyMappings</h2>
+            <p>x - Translate the model in the positive x direction<br>
+                c - Translate the model in the negative x direction<br>
+                y - Translate the model in the positive y direction<br>
+                u - Translate the model in the negative y direction<br>
+                z - Translate the model in the positive z direction<br>
+                a - Translate the model in the negative z direction<br>
+                r - Rotate the model in an X-roll about it's current position<br>
+                b - Toggle pulsing meshes ON/OFF. When ON, the mesh faces pulse back and forth continuously<br>
+            </p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<input type="file" id="fileSelector" name="file" accept=".ply" autocomplete="off"/>
+
+</body>
+</html>
